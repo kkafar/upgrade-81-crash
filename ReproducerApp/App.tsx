@@ -1,28 +1,29 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { useState } from 'react';
+import { Button, View } from 'react-native';
+import { ScreenStack, ScreenStackItem } from 'react-native-screens';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+export function BasicBareScreens() {
+  const [secondShown, setSecondShown] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <ScreenStack style={{ flex: 1 }}>
+      <ScreenStackItem screenId="1" activityState={2}>
+        <Button title="Go to screen 2" onPress={() => setSecondShown(true)} />
+      </ScreenStackItem>
+      {secondShown && (
+        <ScreenStackItem screenId="2" activityState={2}>
+          <Button title="Go back" onPress={() => setSecondShown(false)} />
+        </ScreenStackItem>
+      )}
+    </ScreenStack>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+function App() {
+  return (
+    <BasicBareScreens />
+  );
+}
 
 export default App;
